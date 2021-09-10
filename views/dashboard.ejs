@@ -5,10 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Dashboard</title>
+
+    <%- include("./partials/bootstrap.ejs") %>
   </head>
 
   <body>
-    <h1>Welcome <%= name%>, you are logged in!</h1>
-    <a href="/users/logout">Logout</a>
+    <div class="container w-50 border rounded shadow mt-5 p-3 text-center">
+      <h1>Welcome <%= name%>, you are logged in!</h1>
+      <a href="/users/logout"><button type="button" class="btn btn-secondary my-3">LOGOUT</button></a>
+    </div>
   </body>
 </html>

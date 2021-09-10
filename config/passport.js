@@ -7,12 +7,14 @@ const User = require('../models/user')
 
 module.exports = function (passport) {
   passport.use(
-    new LocalStrategy({ usernameField: 'email' }, (email, password, done) => {
+    // Gotta use passReqToCallback: true to have access to the req here
+    new LocalStrategy({ passReqToCallback: true, usernameField: 'email' }, (req, email, password, done) => {
       // Is email in Database?
       User.findOne({ email: email })
         .then((user) => {
           if (!user) {
-            return done(null, false, { message: 'That email is not registered.' })
+            // req.flash('message', 'That email is not registered.')
+            return done(null, false, req.flash('message', 'That email is not registered.'))
           }
 
           // If email exists in DB, does password match?
@@ -25,7 +27,7 @@ module.exports = function (passport) {
             }
             // password DOESNT match
             else {
-              return done(null, false, { message: 'Password is incorrect.' })
+              return done(null, false, req.flash('message', 'Password is incorrect.'))
             }
           })
         })

@@ -1,6 +1,7 @@
 const express = require('express')
 const path = require('path')
 const helmet = require('helmet')
+const flash = require('connect-flash')
 require('./config/secrets')
 
 const mongoose = require('mongoose')
@@ -38,6 +39,17 @@ app.use(
   })
 )
 
+// Connect flash middleware
+app.use(flash())
+
+// Global variables
+app.use(function (req, res, next) {
+  // res.locals.success_msg = req.flash('success_msg');
+  // res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error')
+  next()
+})
+
 // Middleware & static files
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
@@ -50,15 +62,16 @@ app.use(passport.session())
 //
 // =============================================================================
 app.get('/', (req, res) => {
-  res.render('index')
+  console.log(req.flash)
+  res.render('index', { flash: req.flash('info') })
 })
 
-// app.get('/secret', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/public/secretpage.html'))
-// })
-
 app.get('/login', (req, res) => {
-  res.render('login')
+  if (req.user) {
+    req.flash('message', 'Please note that you are already logged in!')
+  }
+  var message = req.flash('message')
+  res.render('login', { message })
 })
 
 app.get('/register', (req, res) => {
@@ -66,7 +79,9 @@ app.get('/register', (req, res) => {
     firstName: '',
     lastName: '',
     email: '',
-    password: ''
+    password: '',
+    password2: '',
+    message: ''
   })
 })
 
@@ -87,6 +102,8 @@ app.get('/dashboard', ensureAuthenticated, (req, res) => {
 // User routes
 app.use('/users', userRoutes)
 
-app.post('/login/create', (req, res) => {
-  console.log(req.body) // { email: 'emilou@hotmail.com', firstName: 'Emile', lastName: 'Haas' }
-})
+// app.get('/flash', function (req, res) {
+//   // Set a flash message by passing the key, followed by the value, to req.flash().
+//   req.flash('info', 'Flash is back!')
+//   res.redirect('/')
+// })

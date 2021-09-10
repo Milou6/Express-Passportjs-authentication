@@ -5,12 +5,25 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Index</title>
+
+    <%- include("./partials/bootstrap.ejs") %>
   </head>
 
   <body>
-    <h1>Hello there!</h1>
+    <div class="container flex align-items-center justify-content-center vh-100">
+      <div class="flex flex-col align-items-center w-25 mx-auto my-5 p-2 shadow rounded-3 border text-center">
+        <h1 class="text-center">Hello there!</h1>
 
-    <a href="/login">LOGIN</a>
-    <a href="/register">REGISTER</a>
+        <div class="my-4">
+          <h3 class="text-muted text-center fw-light">Already a member?</h3>
+          <a class="" href="/login"><button type="button" class="btn btn-primary">LOGIN</button></a>
+        </div>
+
+        <div class="my-4">
+          <h3 class="text-muted text-center fw-light">Don't have an account yet?</h3>
+          <a href="/register"><button type="button" class="btn btn-secondary">REGISTER</button></a>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

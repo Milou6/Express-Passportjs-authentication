@@ -5,18 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
+
+    <%- include("./partials/bootstrap.ejs") %>
   </head>
 
   <body>
-    <h2>Login</h2>
-    <form action="/login" method="POST">
-      <label for="email">Email: </label>
-      <input type="email" name="email" id="" />
+    <div class="container w-50 border rounded shadow mt-5 text-center">
+      <h2>Login</h2>
 
-      <label for="password">password: </label>
-      <input type="password" name="password" id="" />
+      <div>
+        <% for (msg of message) { %>
+        <div class="alert alert-info alert-dismissible py-1" role="alert"><%= msg %></div>
+        <% } %>
+      </div>
 
-      <button>Submit</button>
-    </form>
+      <form action="/login" method="POST">
+        <label class="form-label" for="email">Email: </label>
+        <input class="form-control" type="email" name="email" id="" />
+
+        <label class="form-label" for="password">password: </label>
+        <input class="form-control" type="password" name="password" id="" />
+
+        <button class="btn btn-primary w-100 my-3">Submit</button>
+      </form>
+    </div>
   </body>
 </html>
